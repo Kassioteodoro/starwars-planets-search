@@ -5,6 +5,9 @@ import AppContext from './AppContext';
 
 function Provider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [filterText, setFilterText] = useState({ filterByName: { name: '' } });
+  const [filterNumber, setFilterNumber] = useState({
+    filterByNumericValues: [{ column: '', comparison: '', value: '' }] });
 
   const requestPlanets = async () => {
     const planetsList = await FetchPlanets();
@@ -18,6 +21,10 @@ function Provider({ children }) {
   const contextValue = {
     planets,
     setPlanets,
+    filterText,
+    setFilterText,
+    filterNumber,
+    setFilterNumber,
   };
 
   return (

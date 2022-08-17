@@ -2,8 +2,15 @@ import React, { useContext } from 'react';
 import AppContext from '../context/AppContext';
 
 export default function Table() {
-  const { planets } = useContext(AppContext);
-  console.log(planets);
+  const {
+    planets,
+    filterText: {
+      filterByName: { name },
+    },
+    filterNumber: { filterByNumericValues },
+  } = useContext(AppContext);
+  const { column, comparison, value } = filterByNumericValues[0];
+  console.log(column, comparison, value);
   return (
     <table>
       <thead>
@@ -23,6 +30,17 @@ export default function Table() {
       </thead>
       <tbody>
         {planets
+          .filter((planet) => planet.name.includes(name))
+          .filter((planet) => {
+            if (comparison === 'maior que') {
+              return Number(planet[column]) > Number(value);
+            } if (comparison === 'menor que') {
+              return Number(planet[column]) < Number(value);
+            } if (comparison === 'igual a') {
+              return Number(planet[column]) === Number(value);
+            }
+            return planet;
+          })
           .map((planet) => (
             <tr key={ planet.name }>
               <td>{planet.name}</td>
