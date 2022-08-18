@@ -9,7 +9,6 @@ export default function Table() {
     },
     filterNumber: { filterByNumericValues },
   } = useContext(AppContext);
-  console.log(filterByNumericValues);
   return (
     <table>
       <thead>
@@ -34,9 +33,7 @@ export default function Table() {
           .filter((planet) => planet.name.includes(name))
           .filter((planet) => {
             if (
-              filterByNumericValues.some(
-                (info) => info.column === 'population',
-              )
+              filterByNumericValues.some((info) => info.column === 'population')
             ) {
               const data = filterByNumericValues.find(
                 ({ column }) => column === 'population',
@@ -76,9 +73,7 @@ export default function Table() {
           })
           .filter((planet) => {
             if (
-              filterByNumericValues.some(
-                (info) => info.column === 'diameter',
-              )
+              filterByNumericValues.some((info) => info.column === 'diameter')
             ) {
               const data = filterByNumericValues.find(
                 ({ column }) => column === 'diameter',
@@ -138,7 +133,7 @@ export default function Table() {
             return planet;
           })
           .map((planet) => (
-            <tr key={ planet.name }>
+            <tr key={ planet.name } data-testid="tr">
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>
               <td>{planet.orbital_period}</td>

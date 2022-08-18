@@ -11,13 +11,9 @@ function Provider({ children }) {
   const [options, setOptions] = useState(['population', 'orbital_period',
     'diameter', 'rotation_period', 'surface_water']);
 
-  const requestPlanets = async () => {
-    const planetsList = await FetchPlanets();
-    setPlanets(planetsList);
-  };
-
   useEffect(() => {
-    requestPlanets();
+    FetchPlanets()
+      .then((response) => setPlanets(response));
   }, []);
 
   const contextValue = {
