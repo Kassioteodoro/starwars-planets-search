@@ -39,7 +39,7 @@ export default function Header() {
         { column, comparison, value: numberFilter }] });
     const removeOption = options.filter((option) => option !== column);
     setOptions(removeOption);
-    setColumn('population');
+    setColumn(removeOption[0]);
     setComparison('maior que');
     setNumberFilter('0');
   };
