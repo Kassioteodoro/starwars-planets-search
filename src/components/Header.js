@@ -6,8 +6,14 @@ export default function Header() {
   const [comparison, setComparison] = useState('maior que');
   const [numberFilter, setNumberFilter] = useState('0');
 
-  const { filterText: { filterByName: { name } },
-    setFilterText, setFilterNumber } = useContext(AppContext);
+  const {
+    filterText: {
+      filterByName: { name },
+    },
+    setFilterText,
+    setFilterNumber,
+    filterNumber: { filterByNumericValues },
+  } = useContext(AppContext);
 
   const setInputName = ({ target: { value } }) => {
     setFilterText({ filterByName: { name: value } });
@@ -27,7 +33,8 @@ export default function Header() {
 
   const saveFilterData = () => {
     setFilterNumber({
-      filterByNumericValues: [{ column, comparison, value: numberFilter }] });
+      filterByNumericValues: [...filterByNumericValues,
+        { column, comparison, value: numberFilter }] });
     setColumn('population');
     setComparison('maior que');
     setNumberFilter('0');

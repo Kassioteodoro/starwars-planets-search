@@ -9,8 +9,7 @@ export default function Table() {
     },
     filterNumber: { filterByNumericValues },
   } = useContext(AppContext);
-  const { column, comparison, value } = filterByNumericValues[0];
-  console.log(column, comparison, value);
+  console.log(filterByNumericValues);
   return (
     <table>
       <thead>
@@ -32,12 +31,107 @@ export default function Table() {
         {planets
           .filter((planet) => planet.name.includes(name))
           .filter((planet) => {
-            if (comparison === 'maior que') {
-              return Number(planet[column]) > Number(value);
-            } if (comparison === 'menor que') {
-              return Number(planet[column]) < Number(value);
-            } if (comparison === 'igual a') {
-              return Number(planet[column]) === Number(value);
+            if (
+              filterByNumericValues.some(
+                (info) => info.column === 'population',
+              )
+            ) {
+              const data = filterByNumericValues.find(
+                ({ column }) => column === 'population',
+              );
+              if (data.comparison === 'maior que') {
+                return Number(planet.population) > Number(data.value);
+              }
+              if (data.comparison === 'menor que') {
+                return Number(planet.population) < Number(data.value);
+              }
+              if (data.comparison === 'igual a') {
+                return Number(planet.population) === Number(data.value);
+              }
+            }
+            return planet;
+          })
+          .filter((planet) => {
+            if (
+              filterByNumericValues.some(
+                (info) => info.column === 'orbital_period',
+              )
+            ) {
+              const data = filterByNumericValues.find(
+                ({ column }) => column === 'orbital_period',
+              );
+              if (data.comparison === 'maior que') {
+                return Number(planet.orbital_period) > Number(data.value);
+              }
+              if (data.comparison === 'menor que') {
+                return Number(planet.orbital_period) < Number(data.value);
+              }
+              if (data.comparison === 'igual a') {
+                return Number(planet.orbital_period) === Number(data.value);
+              }
+            }
+            return planet;
+          })
+          .filter((planet) => {
+            if (
+              filterByNumericValues.some(
+                (info) => info.column === 'diameter',
+              )
+            ) {
+              const data = filterByNumericValues.find(
+                ({ column }) => column === 'diameter',
+              );
+              if (data.comparison === 'maior que') {
+                return Number(planet.diameter) > Number(data.value);
+              }
+              if (data.comparison === 'menor que') {
+                return Number(planet.diameter) < Number(data.value);
+              }
+              if (data.comparison === 'igual a') {
+                return Number(planet.diameter) === Number(data.value);
+              }
+            }
+            return planet;
+          })
+          .filter((planet) => {
+            if (
+              filterByNumericValues.some(
+                (info) => info.column === 'rotation_period',
+              )
+            ) {
+              const data = filterByNumericValues.find(
+                ({ column }) => column === 'rotation_period',
+              );
+              if (data.comparison === 'maior que') {
+                return Number(planet.rotation_period) > Number(data.value);
+              }
+              if (data.comparison === 'menor que') {
+                return Number(planet.rotation_period) < Number(data.value);
+              }
+              if (data.comparison === 'igual a') {
+                return Number(planet.rotation_period) === Number(data.value);
+              }
+            }
+            return planet;
+          })
+          .filter((planet) => {
+            if (
+              filterByNumericValues.some(
+                (info) => info.column === 'surface_water',
+              )
+            ) {
+              const data = filterByNumericValues.find(
+                ({ column }) => column === 'surface_water',
+              );
+              if (data.comparison === 'maior que') {
+                return Number(planet.surface_water) > Number(data.value);
+              }
+              if (data.comparison === 'menor que') {
+                return Number(planet.surface_water) < Number(data.value);
+              }
+              if (data.comparison === 'igual a') {
+                return Number(planet.surface_water) === Number(data.value);
+              }
             }
             return planet;
           })
