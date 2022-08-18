@@ -13,6 +13,8 @@ export default function Header() {
     setFilterText,
     setFilterNumber,
     filterNumber: { filterByNumericValues },
+    options,
+    setOptions,
   } = useContext(AppContext);
 
   const setInputName = ({ target: { value } }) => {
@@ -35,9 +37,28 @@ export default function Header() {
     setFilterNumber({
       filterByNumericValues: [...filterByNumericValues,
         { column, comparison, value: numberFilter }] });
+    const removeOption = options.filter((option) => option !== column);
+    setOptions(removeOption);
     setColumn('population');
     setComparison('maior que');
     setNumberFilter('0');
+  };
+
+  const setRemoveFilter = ({ target: { id } }) => {
+    const removeFilter = filterByNumericValues.filter((filter) => filter.column !== id);
+    setFilterNumber({ filterByNumericValues: removeFilter });
+    setOptions([...options, id]);
+  };
+
+  const setRemoveAllFilter = () => {
+    setFilterNumber({ filterByNumericValues: [] });
+    setOptions([
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ]);
   };
 
   return (
@@ -56,11 +77,11 @@ export default function Header() {
           value={ column }
           onChange={ setSelectColumn }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation period</option>
-          <option value="surface_water">surface water</option>
+          {options.map((option) => (
+            <option key={ option } value={ option }>
+              {option}
+            </option>
+          ))}
         </select>
         <select
           data-testid="comparison-filter"
@@ -84,6 +105,25 @@ export default function Header() {
         >
           FILTRAR
         </button>
+        <button
+          type="button"
+          data-testid="button-remove-filters"
+          onClick={ setRemoveAllFilter }
+        >
+          REMOVER FILTROS
+        </button>
+      </section>
+      <section>
+        {filterByNumericValues.map((filter) => (
+          <label key={ filter.column } htmlFor={ filter.column }>
+            {`${filter.column} `}
+            {`${filter.comparison} `}
+            {`${filter.value}`}
+            <button type="button" id={ filter.column } onClick={ setRemoveFilter }>
+              remove
+            </button>
+          </label>
+        ))}
       </section>
     </div>
   );
