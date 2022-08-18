@@ -115,12 +115,16 @@ export default function Header() {
       </section>
       <section>
         {filterByNumericValues.map((filter) => (
-          <label key={ filter.column } htmlFor={ filter.column }>
+          <label
+            key={ filter.column }
+            htmlFor={ filter.column }
+            data-testid="filter"
+          >
             {`${filter.column} `}
             {`${filter.comparison} `}
             {`${filter.value}`}
             <button type="button" id={ filter.column } onClick={ setRemoveFilter }>
-              remove
+              X
             </button>
           </label>
         ))}
